@@ -49,7 +49,7 @@ namespace Team1_Workshop4_Part2
                     customer.CustHomePhone = (string)custReader["CustHomePhone"];
                     customer.CustBusPhone = (string)custReader["CustBusPhone"];
                     customer.CustEmail = (string)custReader["CustEmail"];
-                    customer.AgentId = (int)custReader["AgentID"];
+                    //customer.AgentId = (int)custReader["AgentID"];
 
                     return customer;
                 }
@@ -72,19 +72,19 @@ namespace Team1_Workshop4_Part2
         [DataObjectMethod(DataObjectMethodType.Select)]
         public static List<Customer> GetAllCustomers()
         {
-            List<Customer>  customers = new List<Customer>(); // empty list
+            List<Customer> customers = new List<Customer>(); // empty list
             SqlConnection connection = TravelExpertsDB.GetConnection();
             string selectStatement =
                 "SELECT CustomerID, CustFirstName, CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, " +
                 "CustHomePhone, CustBusPhone, CustEmail, AgentID FROM Customers ";
-                
+
             SqlCommand selectCommand = new SqlCommand(selectStatement, connection);
-            
+
             try
             {
                 connection.Open();
                 SqlDataReader custReader = selectCommand.ExecuteReader();
-                while(custReader.Read())
+                while (custReader.Read())
                 {
                     Customer customer = new Customer();
                     customer.CustomerID = (int)custReader["CustomerID"];
@@ -98,7 +98,7 @@ namespace Team1_Workshop4_Part2
                     customer.CustHomePhone = (string)custReader["CustHomePhone"];
                     customer.CustBusPhone = (string)custReader["CustBusPhone"];
                     customer.CustEmail = (string)custReader["CustEmail"];
-                    customer.AgentId = (int)custReader["AgentID"];
+                    //customer.AgentId = (int)custReader["AgentID"];
                     customers.Add(customer);
                 }
                 custReader.Close();
@@ -146,8 +146,8 @@ namespace Team1_Workshop4_Part2
                     customer.CustHomePhone = (string)custReader["CustHomePhone"];
                     customer.CustBusPhone = (string)custReader["CustBusPhone"];
                     customer.CustEmail = (string)custReader["CustEmail"];
-                    customer.AgentId = (int)custReader["AgentID"];
-                    
+                    //customer.AgentId = (int)custReader["AgentID"];
+
                     return customer;
                 }
                 else
@@ -173,8 +173,8 @@ namespace Team1_Workshop4_Part2
             SqlConnection connection = TravelExpertsDB.GetConnection();
             string insertStatement =
                 "INSERT Customers " +
-                "(CustFirstName,CustLastName, CustAddress, CustCity, @CustProv, @CustPostal, @CustCountry, @CustHomePhone, @CustBusPhone) " +
-                "VALUES (@CustFirstName, @CustLastName, @CustAddress, @CustCity, @CustProv, @CustPostal, @CustCountry, @CustHomePhone, @CustBusPhone)";
+                "(CustFirstName,CustLastName, CustAddress, CustCity, CustProv, CustPostal, CustCountry, CustHomePhone, CustBusPhone, CustEmail) " +
+                "VALUES (@CustFirstName, @CustLastName, @CustAddress, @CustCity, @CustProv, @CustPostal, @CustCountry, @CustHomePhone, @CustBusPhone , @CustEmail)";
             SqlCommand insertCommand =
                 new SqlCommand(insertStatement, connection);
             insertCommand.Parameters.AddWithValue(
@@ -195,6 +195,8 @@ namespace Team1_Workshop4_Part2
                 "@CustHomePhone", customer.CustHomePhone);
             insertCommand.Parameters.AddWithValue(
                 "@CustBusPhone", customer.CustBusPhone);
+            insertCommand.Parameters.AddWithValue(
+                "@CustEmail", customer.CustEmail);
             try
             {
                 connection.Open();
@@ -247,7 +249,7 @@ namespace Team1_Workshop4_Part2
                 "AND CustHomePhone = @original_CustHomePhone " +
                 "AND CustBusPhone = @original_CustBusPhone " +
                 "AND CustEmail = @original_CustEmail ";
-                //"AND AgentId = @original_AgentId ";
+            //"AND AgentId = @original_AgentId ";
 
 
             SqlCommand updateCommand =
@@ -298,8 +300,8 @@ namespace Team1_Workshop4_Part2
                 "@original_CustEmail", original_customer.CustEmail);
             //updateCommand.Parameters.AddWithValue(
             //    "@original_AgentId", original_customer.AgentId);
-            
-            
+
+
             try
             {
                 connection.Open();
@@ -330,8 +332,8 @@ namespace Team1_Workshop4_Part2
                 "CustLastName = @CustLastName " +
                 "AND CustAddress = @CustAddress " +
                 "AND CityCity = @CityCity " +
-                "AND CustProv = @CustProv " + 
-                "AND CustPostal = @CustPostal "+
+                "AND CustProv = @CustProv " +
+                "AND CustPostal = @CustPostal " +
                 "AND CustCountry = @CustCountry " +
                 "AND CustHomePhone = @CustHomePhone " +
                 "AND CustBusPhone = @CustBusPhone " +

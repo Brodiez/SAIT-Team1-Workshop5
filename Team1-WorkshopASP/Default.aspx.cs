@@ -12,6 +12,7 @@ public partial class _Default : Page
     {
         // hide the greeting panel
         pnlGreeting.Visible = false;
+        
         //Brodie Modifed to check logged in session variables Feb 03 2015
         if (Session["loggedin"] == null)
         {

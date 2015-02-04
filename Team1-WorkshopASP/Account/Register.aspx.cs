@@ -33,6 +33,7 @@ public partial class Account_Register : Page
         {
             Session["loggedin"] = true;
             Session["new"] = true;
+            Session["customer"] = "";
         }
         else
         {
